@@ -26,7 +26,7 @@
 
 </head>
 <body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="brandController"
-      ng-init="findPage()">
+      >
 <!-- .box-body -->
 <div class="box-header with-border">
     <h3 class="box-title">管理</h3>
@@ -55,6 +55,8 @@
         </div>
         <div class="box-tools pull-right">
             <div class="has-feedback">
+                品牌名称:<input ng-model="searchEntity.name"> 品牌首字母:<input ng-model="searchEntity.firstChar">
+                <button  class="btn btn-default" ng-click="reloadList()">查询</button>
             </div>
         </div>
         <!--工具栏/-->
@@ -64,7 +66,7 @@
             <thead>
             <tr>
                 <th class="" style="padding-right:0px">
-                    <input id="selall" type="checkbox" class="icheckbox_square-blue">
+                    <input id="selall" type="checkbox" ng-checked="selectAll" class="icheckbox_square-blue" ng-click="updateSelectAll($event)">
                 </th>
                 <th class="sorting"></th>
                 <th class="sorting">品牌名称</th>
@@ -74,8 +76,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="entity in brandList">
-                <td><input type="checkbox" ng-click="updateSelection($event,entity.id)"></td>
+            <tr ng-repeat="entity in list">
+                <td><input type="checkbox" ng-click="updateSelection($event,entity.id)" ng-checked="isSelected(entity.id)"></td>
                 <td>{{entity.id}}</td>
                 <td>{{entity.name}}</td>
                 <td>{{entity.firstChar}}</td>

@@ -11,6 +11,7 @@ import com.pinyougou.pojo.TbBrandExample.Criteria;
 import com.pinyougou.seller.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -56,7 +57,7 @@ public class BrandServiceImpl implements BrandService {
      */
     @Override
     public void update(TbBrand brand) {
-        brandMapper.updateByPrimaryKey(brand);
+        brandMapper.updateByPrimaryKeySelective(brand);
     }
 
     /**
@@ -75,14 +76,17 @@ public class BrandServiceImpl implements BrandService {
      */
     @Override
     public void delete(Long[] ids) {
-        for (Long id : ids) {
-            brandMapper.deleteByPrimaryKey(id);
+        TbBrandExample example = new TbBrandExample();
+        Criteria criteria = example.createCriteria();
+        if (ids != null && ids.length > 0) {
+            criteria.andIdIn(Arrays.asList(ids));
+            brandMapper.deleteByExample(example);
         }
     }
 
 
     @Override
-    public PageResult findPage(TbBrand brand, int pageNum, int pageSize) {
+    public PageResult<TbBrand> findPage(TbBrand brand, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
 
         TbBrandExample example = new TbBrandExample();
@@ -97,9 +101,8 @@ public class BrandServiceImpl implements BrandService {
             }
 
         }
-
         Page<TbBrand> page = (Page<TbBrand>) brandMapper.selectByExample(example);
-        return new PageResult(page.getTotal(), page.getResult());
+        return new PageResult<>(page.getTotal(), page.getResult());
     }
 
 }

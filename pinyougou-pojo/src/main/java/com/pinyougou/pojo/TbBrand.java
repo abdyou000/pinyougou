@@ -1,5 +1,9 @@
 package com.pinyougou.pojo;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -8,16 +12,21 @@ import java.io.Serializable;
  * @author
  */
 public class TbBrand implements Serializable {
+
     private Long id;
 
     /**
      * 品牌名称
      */
+    @NotBlank(message = "品牌名不能为空")
+    @Size(max = 10,min = 1,message = "品牌名长度必须在1-10之间")
     private String name;
 
     /**
      * 品牌首字母
      */
+    @NotBlank(message = "品牌首字母不能为空")
+    @Size(max = 1,min = 1,message = "品牌首字母长度必须为1")
     private String firstChar;
 
     private static final long serialVersionUID = 1L;

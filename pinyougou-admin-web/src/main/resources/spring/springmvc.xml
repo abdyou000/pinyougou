@@ -9,7 +9,7 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <context:property-placeholder location="classpath:config/application.properties"/>
 
-    <mvc:annotation-driven>
+    <mvc:annotation-driven validator="validator">
         <mvc:message-converters register-defaults="true">
             <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
                 <property name="supportedMediaTypes" value="application/json"/>
@@ -25,7 +25,10 @@
 
     <!-- 引用dubbo 服务 -->
     <dubbo:application name="pinyougou-admin-web"/>
-    <dubbo:registry address="zookeeper://119.23.237.165:2181"/>
+    <dubbo:registry address="zookeeper://119.23.237.165:2181" timeout="50000"/>
     <dubbo:annotation package="com.pinyougou.admin.controller"/>
 
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+    </bean>
 </beans>

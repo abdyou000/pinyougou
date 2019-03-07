@@ -12,4 +12,10 @@
     <artifactId>pinyougou-pojo</artifactId>
 
 
+    <dependencies>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+    </dependencies>
 </project>

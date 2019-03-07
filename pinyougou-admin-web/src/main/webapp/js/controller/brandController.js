@@ -21,7 +21,7 @@ app.controller('brandController', function ($scope, $controller, brandService) {
         brandService.findPage(page, rows).success(
             function (response) {
                 if (response.success) {
-                    $scope.list = response.data.rows;
+                    $scope.brandList = response.data.rows;
                     $scope.paginationConf.totalItems = response.data.total;//更新总记录数
                 } else {
                     alert(response.message)
@@ -34,7 +34,11 @@ app.controller('brandController', function ($scope, $controller, brandService) {
     $scope.findOne = function (id) {
         brandService.findOne(id).success(
             function (response) {
-                $scope.entity = response;
+                if (response.success) {
+                    $scope.entity = response.data;
+                } else {
+                    alert(response.message)
+                }
             }
         );
     }
@@ -53,7 +57,8 @@ app.controller('brandController', function ($scope, $controller, brandService) {
                     //重新查询
                     $scope.reloadList();//重新加载
                 } else {
-                    alert(response.message);
+                    var errors = JSON.parse(response.message);
+                    alert(errors[0].message);
                 }
             }
         );
@@ -68,6 +73,8 @@ app.controller('brandController', function ($scope, $controller, brandService) {
                 if (response.success) {
                     $scope.reloadList();//刷新列表
                     $scope.selectIds = [];
+                } else {
+                    alert(response.message)
                 }
             }
         );
@@ -79,8 +86,12 @@ app.controller('brandController', function ($scope, $controller, brandService) {
     $scope.search = function (page, rows) {
         brandService.search(page, rows, $scope.searchEntity).success(
             function (response) {
-                $scope.list = response.rows;
-                $scope.paginationConf.totalItems = response.total;//更新总记录数
+                if (response.success) {
+                    $scope.list = response.data.rows;
+                    $scope.paginationConf.totalItems = response.data.total;//更新总记录数
+                } else {
+                    alert(response.message)
+                }
             }
         );
     }
