@@ -3,16 +3,18 @@ package com.pinyougou.seller.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.pinyougou.common.PageResult;
+import com.google.common.base.Strings;
+import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.mapper.TbBrandDao;
 import com.pinyougou.pojo.TbBrand;
 import com.pinyougou.pojo.TbBrandExample;
 import com.pinyougou.pojo.TbBrandExample.Criteria;
-import com.pinyougou.seller.service.BrandService;
+import com.pinyougou.seller.auth.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 服务实现层
@@ -92,11 +94,11 @@ public class BrandServiceImpl implements BrandService {
         TbBrandExample example = new TbBrandExample();
         Criteria criteria = example.createCriteria();
 
-        if (brand != null) {
-            if (brand.getName() != null && brand.getName().length() > 0) {
+        if (Objects.nonNull(brand)) {
+            if (!Strings.isNullOrEmpty(brand.getName())) {
                 criteria.andNameLike("%" + brand.getName() + "%");
             }
-            if (brand.getFirstChar() != null && brand.getFirstChar().length() > 0) {
+            if (!Strings.isNullOrEmpty(brand.getFirstChar())) {
                 criteria.andFirstCharLike("%" + brand.getFirstChar() + "%");
             }
 

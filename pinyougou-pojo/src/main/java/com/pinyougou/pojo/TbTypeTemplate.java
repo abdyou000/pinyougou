@@ -1,5 +1,7 @@
 package com.pinyougou.pojo;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -13,16 +15,20 @@ public class TbTypeTemplate implements Serializable {
     /**
      * 模板名称
      */
+    @NotBlank(message = "模板名不能为空")
+    @Size(min = 1,max = 20,message = "模板名长度必须在1-20之间")
     private String name;
 
     /**
      * 关联规格
      */
+    @NotBlank(message = "关联规格不能为空")
     private String specIds;
 
     /**
      * 关联品牌
      */
+    @NotBlank(message = "关联品牌不能为空")
     private String brandIds;
 
     /**

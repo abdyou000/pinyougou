@@ -8,7 +8,7 @@ app.controller('brandController', function ($scope, $controller, brandService) {
         brandService.findAll().success(
             function (response) {
                 if (response.success) {
-                    $scope.brandList = response.data;
+                    $scope.list = response.data;
                 } else {
                     alert(response.message)
                 }
@@ -21,7 +21,7 @@ app.controller('brandController', function ($scope, $controller, brandService) {
         brandService.findPage(page, rows).success(
             function (response) {
                 if (response.success) {
-                    $scope.brandList = response.data.rows;
+                    $scope.list = response.data.rows;
                     $scope.paginationConf.totalItems = response.data.total;//更新总记录数
                 } else {
                     alert(response.message)
@@ -57,8 +57,7 @@ app.controller('brandController', function ($scope, $controller, brandService) {
                     //重新查询
                     $scope.reloadList();//重新加载
                 } else {
-                    var errors = JSON.parse(response.message);
-                    alert(errors[0].message);
+                    alert(response.message);
                 }
             }
         );

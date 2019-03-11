@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+		xmlns="http://www.springframework.org/schema/security"
+		xmlns:beans="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<http pattern="/shoplogin.html" security="none"/>
+	<http pattern="/css/**" security="none"/>
+	<http pattern="/img/**" security="none"/>
+	<http pattern="/js/**" security="none"/>
+	<http pattern="/plugins/**" security="none"/>
+	<http pattern="/seller/add.do" security="none"/>
+
+	<http use-expressions="false">
+		<intercept-url pattern="/**" access="ROLE_SELLER"/>
+		<form-login login-page="/shoplogin.html" default-target-url="/admin/index.html" always-use-default-target="true" authentication-failure-url="/shoplogin.html"/>
+		<!-- 不使用csrf的校验 -->
+		<csrf disabled="true"/>
+		<!-- 配置框架页面不拦截 -->
+		<headers>
+			<frame-options policy="SAMEORIGIN"/>
+		</headers>
+		<!-- 注销的配置 -->
+		<logout logout-url="/logout" logout-success-url="/shoplogin.html" />
+	</http>
+	<!-- 配置认证管理器 -->
+	<authentication-manager>
+		<!-- 认证的提供者 -->
+		<authentication-provider user-service-ref="userDetailsService" />
+	</authentication-manager>
+
+	<beans:bean id="userDetailsService" class="com.pinyougou.seller.auth.UserDetailsServiceImpl" />
+</beans:beans>

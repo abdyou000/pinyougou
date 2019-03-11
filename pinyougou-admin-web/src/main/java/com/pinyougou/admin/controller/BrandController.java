@@ -1,24 +1,18 @@
 package com.pinyougou.admin.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Maps;
-import com.pinyougou.common.PageResult;
-import com.pinyougou.common.ResponseResult;
+import com.pinyougou.common.pojo.PageResult;
+import com.pinyougou.common.pojo.ResponseResult;
+import com.pinyougou.common.utils.ValidateUtil;
 import com.pinyougou.pojo.TbBrand;
-import com.pinyougou.seller.service.BrandService;
+import com.pinyougou.seller.auth.BrandService;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * controller
@@ -75,7 +69,7 @@ public class BrandController {
     @RequestMapping("/add")
     public ResponseResult<String> add(@RequestBody @Validated TbBrand brand, BindingResult result) {
         if (result.hasFieldErrors()) {
-            return ResponseResult.error(parseError(result));
+            return ResponseResult.error(ValidateUtil.parseError(result));
         }
         try {
             brandService.add(brand);
@@ -95,7 +89,7 @@ public class BrandController {
     @RequestMapping("/update")
     public ResponseResult<String> update(@RequestBody @Validated TbBrand brand, BindingResult result) {
         if (result.hasFieldErrors()) {
-            return ResponseResult.error(parseError(result));
+            return ResponseResult.error(ValidateUtil.parseError(result));
         }
         try {
             brandService.update(brand);
@@ -105,20 +99,6 @@ public class BrandController {
             return ResponseResult.error("修改失败");
         }
     }
-
-    private String parseError(BindingResult result) {
-        List<Map<String, String>> fieldErrors = result.getFieldErrors()
-                .stream()
-                .map(x -> {
-                    Map<String, String> map = Maps.newHashMap();
-                    map.put("field", x.getField());
-                    map.put("message", x.getDefaultMessage());
-                    return map;
-                })
-                .collect(Collectors.toList());
-        return JSON.toJSONString(fieldErrors);
-    }
-
     /**
      * 获取实体
      *

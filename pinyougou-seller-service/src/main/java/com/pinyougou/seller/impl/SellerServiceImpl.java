@@ -3,14 +3,17 @@ package com.pinyougou.seller.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.pinyougou.common.PageResult;
+import com.pinyougou.common.enums.SellerStatusEnum;
+import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.mapper.TbSellerDao;
 import com.pinyougou.pojo.TbSeller;
 import com.pinyougou.pojo.TbSellerExample;
 import com.pinyougou.pojo.TbSellerExample.Criteria;
-import com.pinyougou.seller.service.SellerService;
+import com.pinyougou.seller.auth.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,6 +50,16 @@ public class SellerServiceImpl implements SellerService {
      */
     @Override
     public void add(TbSeller seller) {
+        //验证sellerId唯一性
+        TbSellerExample example = new TbSellerExample();
+        Criteria criteria = example.createCriteria();
+        criteria.andSellerIdEqualTo(seller.getSellerId());
+        List<TbSeller> sellers = sellerMapper.selectByExample(example);
+        if (sellers.size() > 0) {
+            throw new IllegalArgumentException("用户名已存在");
+        }
+        seller.setStatus(String.valueOf(SellerStatusEnum.NOTAUDIT.ordinal()));
+        seller.setCreateTime(new Date());
         sellerMapper.insert(seller);
     }
 
@@ -56,7 +69,14 @@ public class SellerServiceImpl implements SellerService {
      */
     @Override
     public void update(TbSeller seller) {
-        sellerMapper.updateByPrimaryKey(seller);
+        sellerMapper.updateByPrimaryKeySelective(seller);
+    }
+
+    @Override
+    public void updateStatus(Long id, String status) {
+        TbSeller seller = sellerMapper.selectByPrimaryKey(id);
+        seller.setStatus(status);
+        sellerMapper.updateByPrimaryKeySelective(seller);
     }
 
     /**
@@ -66,7 +86,7 @@ public class SellerServiceImpl implements SellerService {
      * @return
      */
     @Override
-    public TbSeller findOne(String id) {
+    public TbSeller findOne(Long id) {
         return sellerMapper.selectByPrimaryKey(id);
     }
 
@@ -74,9 +94,12 @@ public class SellerServiceImpl implements SellerService {
      * 批量删除
      */
     @Override
-    public void delete(String[] ids) {
-        for (String id : ids) {
-            sellerMapper.deleteByPrimaryKey(id);
+    public void delete(Long[] ids) {
+        TbSellerExample example = new TbSellerExample();
+        Criteria criteria = example.createCriteria();
+        if (ids != null && ids.length > 0) {
+            criteria.andIdIn(Arrays.asList(ids));
+            sellerMapper.deleteByExample(example);
         }
     }
 

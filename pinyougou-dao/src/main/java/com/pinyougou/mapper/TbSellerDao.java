@@ -2,16 +2,15 @@ package com.pinyougou.mapper;
 
 import com.pinyougou.pojo.TbSeller;
 import com.pinyougou.pojo.TbSellerExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface TbSellerDao {
     long countByExample(TbSellerExample example);
 
     int deleteByExample(TbSellerExample example);
 
-    int deleteByPrimaryKey(String sellerId);
+    int deleteByPrimaryKey(Long id);
 
     int insert(TbSeller record);
 
@@ -19,7 +18,7 @@ public interface TbSellerDao {
 
     List<TbSeller> selectByExample(TbSellerExample example);
 
-    TbSeller selectByPrimaryKey(String sellerId);
+    TbSeller selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") TbSeller record, @Param("example") TbSellerExample example);
 

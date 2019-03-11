@@ -3,12 +3,12 @@ package com.pinyougou.seller.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.pinyougou.common.PageResult;
+import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.mapper.TbAddressDao;
 import com.pinyougou.pojo.TbAddress;
 import com.pinyougou.pojo.TbAddressExample;
 import com.pinyougou.pojo.TbAddressExample.Criteria;
-import com.pinyougou.seller.service.AddressService;
+import com.pinyougou.seller.auth.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

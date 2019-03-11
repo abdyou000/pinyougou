@@ -1,5 +1,7 @@
 package com.pinyougou.pojo;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -16,6 +18,8 @@ public class TbSpecification implements Serializable {
     /**
      * 名称
      */
+    @NotBlank(message = "规格名不能为空")
+    @Size(min = 1,max = 20,message = "规格名长度必须在1-20之间")
     private String specName;
 
     private static final long serialVersionUID = 1L;

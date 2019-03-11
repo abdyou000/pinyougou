@@ -26,7 +26,11 @@ app.controller('sellerController', function ($scope, $controller, sellerService)
     $scope.findOne = function (id) {
         sellerService.findOne(id).success(
             function (response) {
-                $scope.entity = response;
+                if (response.success) {
+                    $scope.entity = response.data;
+                } else {
+                    alert(response.message)
+                }
             }
         );
     }
@@ -71,10 +75,27 @@ app.controller('sellerController', function ($scope, $controller, sellerService)
     $scope.search = function (page, rows) {
         sellerService.search(page, rows, $scope.searchEntity).success(
             function (response) {
-                $scope.list = response.rows;
-                $scope.paginationConf.totalItems = response.total;//更新总记录数
+                if (response.success) {
+                    $scope.list = response.data.rows;
+                    $scope.paginationConf.totalItems = response.data.total;//更新总记录数
+                } else {
+                    alert(response.message)
+                }
+
             }
         );
     }
 
-});	
+    $scope.sellerStatusArr = ['待审核', '已通过', '审核未通过', '关闭'];
+
+    $scope.updateStatus = function (id, status) {
+        sellerService.updateStatus(id, status).success((response) => {
+            if (response.success) {
+                $scope.reloadList();//刷新列表
+            } else {
+                alert(response.message)
+            }
+        })
+    };
+})
+;

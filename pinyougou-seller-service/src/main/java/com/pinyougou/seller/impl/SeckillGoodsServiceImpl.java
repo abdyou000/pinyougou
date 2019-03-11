@@ -3,12 +3,12 @@ package com.pinyougou.seller.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.pinyougou.common.PageResult;
+import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.mapper.TbSeckillGoodsDao;
 import com.pinyougou.pojo.TbSeckillGoods;
 import com.pinyougou.pojo.TbSeckillGoodsExample;
 import com.pinyougou.pojo.TbSeckillGoodsExample.Criteria;
-import com.pinyougou.seller.service.SeckillGoodsService;
+import com.pinyougou.seller.auth.SeckillGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

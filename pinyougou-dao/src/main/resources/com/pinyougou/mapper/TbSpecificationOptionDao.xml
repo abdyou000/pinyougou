@@ -116,6 +116,13 @@
     values (#{optionName,jdbcType=VARCHAR}, #{specId,jdbcType=BIGINT}, #{orders,jdbcType=INTEGER}
       )
   </insert>
+    <insert id="insertList" parameterType="java.util.List">
+        insert into tb_specification_option (option_name, spec_id, orders)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.optionName,jdbcType=VARCHAR}, #{item.specId,jdbcType=BIGINT}, #{item.orders,jdbcType=INTEGER})
+        </foreach>
+    </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id"
             parameterType="com.pinyougou.pojo.TbSpecificationOption" useGeneratedKeys="true">
         insert into tb_specification_option

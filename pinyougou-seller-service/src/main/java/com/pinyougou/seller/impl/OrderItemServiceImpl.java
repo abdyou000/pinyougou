@@ -3,12 +3,12 @@ package com.pinyougou.seller.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.pinyougou.common.PageResult;
+import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.mapper.TbOrderItemDao;
 import com.pinyougou.pojo.TbOrderItem;
 import com.pinyougou.pojo.TbOrderItemExample;
 import com.pinyougou.pojo.TbOrderItemExample.Criteria;
-import com.pinyougou.seller.service.OrderItemService;
+import com.pinyougou.seller.auth.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

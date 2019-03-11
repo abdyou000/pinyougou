@@ -1,5 +1,7 @@
 package com.pinyougou.pojo;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -16,6 +18,7 @@ public class TbSpecificationOption implements Serializable {
     /**
      * 规格项名称
      */
+    @NotBlank(message = "规格项名不能为空")
     private String optionName;
 
     /**
@@ -26,6 +29,7 @@ public class TbSpecificationOption implements Serializable {
     /**
      * 排序值
      */
+    @NotNull(message = "排序值不能为空")
     private Integer orders;
 
     private static final long serialVersionUID = 1L;

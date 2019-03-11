@@ -1,32 +1,46 @@
 package com.pinyougou.pojo;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * tb_seller
- *
- * @author
+ * @author 
  */
 public class TbSeller implements Serializable {
     /**
+     * 主键
+     */
+    private Long id;
+
+    /**
      * 用户ID
      */
+    @NotBlank(message = "用户名不能为空")
+    @Size(max = 10,min = 1,message = "用户名长度必须在1-10之间")
     private String sellerId;
 
     /**
      * 公司名
      */
+    @NotBlank(message = "公司名不能为空")
+    @Size(max = 10,min = 1,message = "公司名长度必须在1-10之间")
     private String name;
 
     /**
      * 店铺名称
      */
+    @NotBlank(message = "店铺名不能为空")
+    @Size(max = 20,min = 1,message = "店铺名长度必须在1-20之间")
     private String nickName;
 
     /**
      * 密码
      */
+    @NotBlank(message = "密码不能为空")
+    @Size(max = 20,min = 6,message = "密码长度必须在6-20之间")
     private String password;
 
     /**
@@ -45,7 +59,7 @@ public class TbSeller implements Serializable {
     private String telephone;
 
     /**
-     * 状态
+     * 状态 0未审核 1审核通过 2审核不通过 3店铺已关闭
      */
     private String status;
 
@@ -130,6 +144,14 @@ public class TbSeller implements Serializable {
     private String bankName;
 
     private static final long serialVersionUID = 1L;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getSellerId() {
         return sellerId;
@@ -335,36 +357,38 @@ public class TbSeller implements Serializable {
             return false;
         }
         TbSeller other = (TbSeller) that;
-        return (this.getSellerId() == null ? other.getSellerId() == null : this.getSellerId().equals(other.getSellerId()))
-                && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-                && (this.getNickName() == null ? other.getNickName() == null : this.getNickName().equals(other.getNickName()))
-                && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
-                && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
-                && (this.getMobile() == null ? other.getMobile() == null : this.getMobile().equals(other.getMobile()))
-                && (this.getTelephone() == null ? other.getTelephone() == null : this.getTelephone().equals(other.getTelephone()))
-                && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-                && (this.getAddressDetail() == null ? other.getAddressDetail() == null : this.getAddressDetail().equals(other.getAddressDetail()))
-                && (this.getLinkmanName() == null ? other.getLinkmanName() == null : this.getLinkmanName().equals(other.getLinkmanName()))
-                && (this.getLinkmanQq() == null ? other.getLinkmanQq() == null : this.getLinkmanQq().equals(other.getLinkmanQq()))
-                && (this.getLinkmanMobile() == null ? other.getLinkmanMobile() == null : this.getLinkmanMobile().equals(other.getLinkmanMobile()))
-                && (this.getLinkmanEmail() == null ? other.getLinkmanEmail() == null : this.getLinkmanEmail().equals(other.getLinkmanEmail()))
-                && (this.getLicenseNumber() == null ? other.getLicenseNumber() == null : this.getLicenseNumber().equals(other.getLicenseNumber()))
-                && (this.getTaxNumber() == null ? other.getTaxNumber() == null : this.getTaxNumber().equals(other.getTaxNumber()))
-                && (this.getOrgNumber() == null ? other.getOrgNumber() == null : this.getOrgNumber().equals(other.getOrgNumber()))
-                && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
-                && (this.getLogoPic() == null ? other.getLogoPic() == null : this.getLogoPic().equals(other.getLogoPic()))
-                && (this.getBrief() == null ? other.getBrief() == null : this.getBrief().equals(other.getBrief()))
-                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-                && (this.getLegalPerson() == null ? other.getLegalPerson() == null : this.getLegalPerson().equals(other.getLegalPerson()))
-                && (this.getLegalPersonCardId() == null ? other.getLegalPersonCardId() == null : this.getLegalPersonCardId().equals(other.getLegalPersonCardId()))
-                && (this.getBankUser() == null ? other.getBankUser() == null : this.getBankUser().equals(other.getBankUser()))
-                && (this.getBankName() == null ? other.getBankName() == null : this.getBankName().equals(other.getBankName()));
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getSellerId() == null ? other.getSellerId() == null : this.getSellerId().equals(other.getSellerId()))
+            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+            && (this.getNickName() == null ? other.getNickName() == null : this.getNickName().equals(other.getNickName()))
+            && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
+            && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
+            && (this.getMobile() == null ? other.getMobile() == null : this.getMobile().equals(other.getMobile()))
+            && (this.getTelephone() == null ? other.getTelephone() == null : this.getTelephone().equals(other.getTelephone()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getAddressDetail() == null ? other.getAddressDetail() == null : this.getAddressDetail().equals(other.getAddressDetail()))
+            && (this.getLinkmanName() == null ? other.getLinkmanName() == null : this.getLinkmanName().equals(other.getLinkmanName()))
+            && (this.getLinkmanQq() == null ? other.getLinkmanQq() == null : this.getLinkmanQq().equals(other.getLinkmanQq()))
+            && (this.getLinkmanMobile() == null ? other.getLinkmanMobile() == null : this.getLinkmanMobile().equals(other.getLinkmanMobile()))
+            && (this.getLinkmanEmail() == null ? other.getLinkmanEmail() == null : this.getLinkmanEmail().equals(other.getLinkmanEmail()))
+            && (this.getLicenseNumber() == null ? other.getLicenseNumber() == null : this.getLicenseNumber().equals(other.getLicenseNumber()))
+            && (this.getTaxNumber() == null ? other.getTaxNumber() == null : this.getTaxNumber().equals(other.getTaxNumber()))
+            && (this.getOrgNumber() == null ? other.getOrgNumber() == null : this.getOrgNumber().equals(other.getOrgNumber()))
+            && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
+            && (this.getLogoPic() == null ? other.getLogoPic() == null : this.getLogoPic().equals(other.getLogoPic()))
+            && (this.getBrief() == null ? other.getBrief() == null : this.getBrief().equals(other.getBrief()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getLegalPerson() == null ? other.getLegalPerson() == null : this.getLegalPerson().equals(other.getLegalPerson()))
+            && (this.getLegalPersonCardId() == null ? other.getLegalPersonCardId() == null : this.getLegalPersonCardId().equals(other.getLegalPersonCardId()))
+            && (this.getBankUser() == null ? other.getBankUser() == null : this.getBankUser().equals(other.getBankUser()))
+            && (this.getBankName() == null ? other.getBankName() == null : this.getBankName().equals(other.getBankName()));
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getSellerId() == null) ? 0 : getSellerId().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getNickName() == null) ? 0 : getNickName().hashCode());
@@ -398,6 +422,7 @@ public class TbSeller implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
         sb.append(", sellerId=").append(sellerId);
         sb.append(", name=").append(name);
         sb.append(", nickName=").append(nickName);

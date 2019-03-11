@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/webbase.css"/>
     <link rel="stylesheet" type="text/css" href="css/pages-login-manage.css"/>
+
 </head>
 
 <body>
@@ -37,21 +38,25 @@
                     <img src="../img/wx_cz.jpg"/>
                 </div>
                 <div id="profile" class="tab-pane  active">
-                    <form class="sui-form">
+                    <form class="sui-form" method="post" action="/login" id="loginForm">
                         <div class="input-prepend"><span class="add-on loginname"></span>
-                            <input id="prependedInput" type="text" placeholder="邮箱/用户名/手机号" class="span2 input-xfat">
+                            <input name="username" id="username" type="text" placeholder="邮箱/用户名/手机号"
+                                   class="span2 input-xfat">
                         </div>
                         <div class="input-prepend"><span class="add-on loginpwd"></span>
-                            <input id="prependedInput" type="password" placeholder="请输入密码" class="span2 input-xfat">
+                            <input name="password" type="password" id="password" placeholder="请输入密码"
+                                   class="span2 input-xfat">
                         </div>
                         <div class="setting">
-                            <div id="slider">
-                                <div id="slider_bg"></div>
-                                <span id="label">>></span> <span id="labelTip">拖动滑块验证</span>
+                            <div id="captcha2" style="width: 300px;display: inline-block;">
+                                <p id="wait2" style="text-align: left;color: #666;display:block;margin: 0;">
+                                    正在加载验证码......</p>
                             </div>
                         </div>
                         <div class="logined">
-                            <a class="sui-btn btn-block btn-xlarge btn-danger" href="admin/index.html" target="_blank">登&nbsp;&nbsp;录</a>
+                            <a class="sui-btn btn-block btn-xlarge btn-danger"
+                               id="submit2"
+                               target="_blank">登&nbsp;&nbsp;录</a>
                         </div>
                     </form>
 
@@ -85,16 +90,72 @@
 <script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
 <script type="text/javascript" src="js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
 <script src="js/pages/jquery.slideunlock.js"></script>
+<script src="./plugins/gt/gt.js"></script>
+<script src="./plugins/gt/layer.js"></script>
+
 <script>
-    $(function () {
-        var slider = new SliderUnlock("#slider", {
-            successLabelTip: "欢迎访问品优购"
-        }, function () {
-            // alert("验证成功,即将跳转至首页");
-            // window.location.href="index.html"
+    let handler = function (captchaObj) {
+        $("#submit2").click(function (e) {
+                var username = $('#username').val();
+                var password = $('#password').val();
+                if (!username || username.trim() == '') {
+                    layer.msg('用户名不能为空');
+                    return false;
+                }
+                if (!password || password.trim() == '') {
+                    layer.msg('密码不能为空');
+                    return false;
+                }
+                var result = captchaObj.getValidate();
+                if (!result) {
+                    layer.msg('请先验证');
+                    return false;
+                }
+                $.ajax({
+                    url: '/verifyLoginServlet',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        geetest_challenge: result.geetest_challenge,
+                        geetest_validate: result.geetest_validate,
+                        geetest_seccode: result.geetest_seccode
+                    },
+                    success: function (data) {
+                        if (data.status === 'success') {
+                            $('#loginForm').submit();
+                        } else if (data.status === 'fail') {
+                            alert('登录失败');
+                        }
+                    }
+                })
+
+                e.preventDefault();
+            }
+        );
+        // 将验证码加到id为captcha的元素里，同时会有三个input的值用于表单提交
+        captchaObj.appendTo("#captcha2");
+        captchaObj.onReady(function () {
+            $("#wait2").hide();
         });
-        slider.init();
-    })
+    };
+    $.ajax({
+        url: "/startCaptchaServlet?t=" + (new Date()).getTime(), // 加随机数防止缓存
+        type: "get",
+        dataType: "json",
+        success: function (data) {
+            // 调用 initGeetest 初始化参数
+            // 参数1：配置参数
+            // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它调用相应的接口
+            initGeetest({
+                gt: data.gt,
+                challenge: data.challenge,
+                new_captcha: data.new_captcha, // 用于宕机时表示是新验证码的宕机
+                offline: !data.success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+                product: "popup", // 产品形式，包括：float，popup
+                width: "100%"
+            }, handler);
+        }
+    });
 </script>
 </body>
 

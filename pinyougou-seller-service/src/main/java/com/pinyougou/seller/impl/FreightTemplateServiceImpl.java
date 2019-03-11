@@ -3,12 +3,12 @@ package com.pinyougou.seller.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.pinyougou.common.PageResult;
+import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.mapper.TbFreightTemplateDao;
 import com.pinyougou.pojo.TbFreightTemplate;
 import com.pinyougou.pojo.TbFreightTemplateExample;
 import com.pinyougou.pojo.TbFreightTemplateExample.Criteria;
-import com.pinyougou.seller.service.FreightTemplateService;
+import com.pinyougou.seller.auth.FreightTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

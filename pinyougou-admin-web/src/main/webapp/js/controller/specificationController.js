@@ -7,7 +7,11 @@ app.controller('specificationController', function ($scope, $controller, specifi
     $scope.findAll = function () {
         specificationService.findAll().success(
             function (response) {
-                $scope.list = response;
+                if (response.success) {
+                    $scope.list = response.data;
+                } else {
+                    alert(response.message)
+                }
             }
         );
     }
@@ -16,8 +20,12 @@ app.controller('specificationController', function ($scope, $controller, specifi
     $scope.findPage = function (page, rows) {
         specificationService.findPage(page, rows).success(
             function (response) {
-                $scope.list = response.rows;
-                $scope.paginationConf.totalItems = response.total;//更新总记录数
+                if (response.success) {
+                    $scope.list = response.data.rows;
+                    $scope.paginationConf.totalItems = response.data.total;//更新总记录数
+                } else {
+                    alert(response.message)
+                }
             }
         );
     }
@@ -26,7 +34,11 @@ app.controller('specificationController', function ($scope, $controller, specifi
     $scope.findOne = function (id) {
         specificationService.findOne(id).success(
             function (response) {
-                $scope.entity = response;
+                if (response.success) {
+                    $scope.entity = response.data;
+                } else {
+                    alert(response.message)
+                }
             }
         );
     }
@@ -34,7 +46,7 @@ app.controller('specificationController', function ($scope, $controller, specifi
     //保存
     $scope.save = function () {
         var serviceObject;//服务层对象
-        if ($scope.entity.id != null) {//如果有ID
+        if ($scope.entity.specification.id != null) {//如果有ID
             serviceObject = specificationService.update($scope.entity); //修改
         } else {
             serviceObject = specificationService.add($scope.entity);//增加
@@ -60,21 +72,35 @@ app.controller('specificationController', function ($scope, $controller, specifi
                 if (response.success) {
                     $scope.reloadList();//刷新列表
                     $scope.selectIds = [];
+                } else {
+                    alert(response.message)
                 }
             }
         );
     }
 
     $scope.searchEntity = {};//定义搜索对象
+    $scope.entity = {specification:{},specificationOptionList:[]};//定义搜索对象
 
     //搜索
     $scope.search = function (page, rows) {
         specificationService.search(page, rows, $scope.searchEntity).success(
             function (response) {
-                $scope.list = response.rows;
-                $scope.paginationConf.totalItems = response.total;//更新总记录数
+                if (response.success) {
+                    $scope.list = response.data.rows;
+                    $scope.paginationConf.totalItems = response.data.total;//更新总记录数
+                } else {
+                    alert(response.message)
+                }
             }
         );
     }
 
+    $scope.addTableRow = function () {
+        $scope.entity.specificationOptionList.push({});
+    }
+
+    $scope.deleteTableRow = function (index) {
+        $scope.entity.specificationOptionList.splice(index,1);
+    }
 });	

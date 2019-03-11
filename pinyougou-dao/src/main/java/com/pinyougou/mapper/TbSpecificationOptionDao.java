@@ -15,6 +15,8 @@ public interface TbSpecificationOptionDao {
 
     int insert(TbSpecificationOption record);
 
+    void insertList(List<TbSpecificationOption> records);
+
     int insertSelective(TbSpecificationOption record);
 
     List<TbSpecificationOption> selectByExample(TbSpecificationOptionExample example);
