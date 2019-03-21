@@ -1,5 +1,9 @@
 package com.pinyougou.pojo;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -16,16 +20,20 @@ public class TbItemCat implements Serializable {
     /**
      * 父类目ID=0时，代表的是一级的类目
      */
+    @NotNull(message = "父类目不能为空")
     private Long parentId;
 
     /**
      * 类目名称
      */
+    @NotBlank(message = "类目名不能为空")
+    @Size(max = 20,min = 1,message = "类目名长度必须在1-20之间")
     private String name;
 
     /**
      * 类型id
      */
+    @NotNull(message = "类型不能为空")
     private Long typeId;
 
     private static final long serialVersionUID = 1L;

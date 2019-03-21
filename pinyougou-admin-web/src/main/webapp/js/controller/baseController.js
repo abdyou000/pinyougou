@@ -1,5 +1,5 @@
 //品牌控制层
-app.controller('baseController', function ($scope) {
+app.controller('baseController', function ($scope,layer) {
 
     //重新加载列表 数据
     $scope.reloadList = function () {

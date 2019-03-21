@@ -10,7 +10,7 @@ app.controller('specificationController', function ($scope, $controller, specifi
                 if (response.success) {
                     $scope.list = response.data;
                 } else {
-                    alert(response.message)
+                    layer.msg(response.message)
                 }
             }
         );
@@ -24,7 +24,7 @@ app.controller('specificationController', function ($scope, $controller, specifi
                     $scope.list = response.data.rows;
                     $scope.paginationConf.totalItems = response.data.total;//更新总记录数
                 } else {
-                    alert(response.message)
+                    layer.msg(response.message)
                 }
             }
         );
@@ -37,7 +37,7 @@ app.controller('specificationController', function ($scope, $controller, specifi
                 if (response.success) {
                     $scope.entity = response.data;
                 } else {
-                    alert(response.message)
+                    layer.msg(response.message)
                 }
             }
         );
@@ -57,7 +57,7 @@ app.controller('specificationController', function ($scope, $controller, specifi
                     //重新查询
                     $scope.reloadList();//重新加载
                 } else {
-                    alert(response.message);
+                    layer.msg(response.message);
                 }
             }
         );
@@ -73,7 +73,7 @@ app.controller('specificationController', function ($scope, $controller, specifi
                     $scope.reloadList();//刷新列表
                     $scope.selectIds = [];
                 } else {
-                    alert(response.message)
+                    layer.msg(response.message)
                 }
             }
         );
@@ -90,7 +90,7 @@ app.controller('specificationController', function ($scope, $controller, specifi
                     $scope.list = response.data.rows;
                     $scope.paginationConf.totalItems = response.data.total;//更新总记录数
                 } else {
-                    alert(response.message)
+                    layer.msg(response.message)
                 }
             }
         );

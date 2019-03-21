@@ -5,7 +5,7 @@ import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.common.pojo.ResponseResult;
 import com.pinyougou.common.utils.ValidateUtil;
 import com.pinyougou.pojo.TbSeller;
-import com.pinyougou.seller.auth.SellerService;
+import com.pinyougou.seller.service.SellerService;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,8 +51,11 @@ public class SellerController {
     @RequestMapping("/updateStatus")
     public ResponseResult<String> updateStatus(Long id,String status) {
         try {
-            sellerService.updateStatus(id,status);
+            sellerService.updateStatus(id, status);
             return ResponseResult.ok("修改成功");
+        }catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return ResponseResult.error(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseResult.error("修改失败");
@@ -71,7 +74,7 @@ public class SellerController {
             return ResponseResult.ok(seller);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseResult.error("删除失败");
+            return ResponseResult.error("查询失败");
         }
     }
 

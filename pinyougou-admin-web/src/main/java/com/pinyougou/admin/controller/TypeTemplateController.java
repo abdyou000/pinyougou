@@ -5,7 +5,7 @@ import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.common.pojo.ResponseResult;
 import com.pinyougou.common.utils.ValidateUtil;
 import com.pinyougou.pojo.TbTypeTemplate;
-import com.pinyougou.seller.auth.TypeTemplateService;
+import com.pinyougou.seller.service.TypeTemplateService;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -112,7 +112,7 @@ public class TypeTemplateController {
             return ResponseResult.ok(typeTemplate);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseResult.error("删除失败");
+            return ResponseResult.error("查询失败");
         }
     }
 

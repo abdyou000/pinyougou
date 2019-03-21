@@ -9,7 +9,7 @@
     <dubbo:protocol name="dubbo" port="20881"></dubbo:protocol>
     <dubbo:application name="pinyougou-seller-service"/>
     <dubbo:registry address="zookeeper://119.23.237.165:2181" timeout="50000"/>
-    <dubbo:annotation package="com.pinyougou.seller.impl"/>
+    <dubbo:annotation package="com.pinyougou.seller.service.impl"/>
 
 
 </beans>

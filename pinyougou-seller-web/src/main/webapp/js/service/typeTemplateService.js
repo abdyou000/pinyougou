@@ -30,7 +30,7 @@ app.service('typeTemplateService',function($http){
 		return $http.post('../typeTemplate/search.do?page='+page+"&rows="+rows, searchEntity);
 	}    	
 	
-	this.findBySpecList=function(id){
-		return $http.get('../typeTemplate/findBySpecList.do?id='+id);
+	this.findSpecList=function(id){
+		return $http.get('../typeTemplate/findSpecList.do?id='+id);
 	}
 });

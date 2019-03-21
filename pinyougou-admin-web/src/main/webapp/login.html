@@ -41,10 +41,10 @@
                     <form class="sui-form" method="post" action="/login" id="loginForm">
                         <div class="input-prepend"><span class="add-on loginname"></span>
                             <input name="username" id="username" type="text" placeholder="邮箱/用户名/手机号"
-                                   class="span2 input-xfat">
+                                   class="span2 input-xfat" value="admin">
                         </div>
                         <div class="input-prepend"><span class="add-on loginpwd"></span>
-                            <input name="password" type="password" id="password" placeholder="请输入密码"
+                            <input name="password" type="password" id="password" placeholder="请输入密码" value="123456"
                                    class="span2 input-xfat">
                         </div>
                         <div class="setting">
@@ -94,6 +94,19 @@
 <script src="./plugins/gt/layer.js"></script>
 
 <script>
+    $(function(){
+        login.initPage();
+    });
+
+    var login = {
+        //初始化页面跳转，为了防止从iframe跳转到login页面直接在iframe中显示login页面
+        initPage : function() {
+            //alert(location.href);
+            if(window.top != window.self){
+                top.location.href = location.href;
+            }
+        },
+    }
     let handler = function (captchaObj) {
         $("#submit2").click(function (e) {
                 var username = $('#username').val();
@@ -124,7 +137,7 @@
                         if (data.status === 'success') {
                             $('#loginForm').submit();
                         } else if (data.status === 'fail') {
-                            alert('登录失败');
+                            layer.msg('登录失败');
                         }
                     }
                 })

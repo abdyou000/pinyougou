@@ -114,10 +114,10 @@
     </delete>
     <insert id="insert" keyColumn="goods_id" keyProperty="goodsId" parameterType="com.pinyougou.pojo.TbGoodsDesc"
             useGeneratedKeys="true">
-    insert into tb_goods_desc (introduction, specification_items, 
+    insert into tb_goods_desc (goods_id,introduction, specification_items,
       custom_attribute_items, item_images, package_list, 
       sale_service)
-    values (#{introduction,jdbcType=VARCHAR}, #{specificationItems,jdbcType=VARCHAR}, 
+    values (#{goodsId},#{introduction,jdbcType=VARCHAR}, #{specificationItems,jdbcType=VARCHAR},
       #{customAttributeItems,jdbcType=VARCHAR}, #{itemImages,jdbcType=VARCHAR}, #{packageList,jdbcType=VARCHAR}, 
       #{saleService,jdbcType=VARCHAR})
   </insert>
@@ -125,6 +125,9 @@
             parameterType="com.pinyougou.pojo.TbGoodsDesc" useGeneratedKeys="true">
         insert into tb_goods_desc
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">
+                goods_id,
+            </if>
             <if test="introduction != null">
                 introduction,
             </if>

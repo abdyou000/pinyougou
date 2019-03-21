@@ -13,7 +13,7 @@ app.controller('typeTemplateController', function ($scope, $controller,
                 if (response.success) {
                     $scope.list = response.data;
                 } else {
-                    alert(response.message)
+                    layer.msg(response.message)
                 }
             }
         );
@@ -27,7 +27,7 @@ app.controller('typeTemplateController', function ($scope, $controller,
                     $scope.list = response.data.rows;
                     $scope.paginationConf.totalItems = response.data.total;//更新总记录数
                 } else {
-                    alert(response.message)
+                    layer.msg(response.message)
                 }
             }
         );
@@ -40,7 +40,7 @@ app.controller('typeTemplateController', function ($scope, $controller,
                 if (response.success) {
                     $scope.entity = string2Json(response.data);
                 } else {
-                    alert(response.message)
+                    layer.msg(response.message)
                 }
             }
         );
@@ -67,7 +67,7 @@ app.controller('typeTemplateController', function ($scope, $controller,
                     //重新查询
                     $scope.reloadList();//重新加载
                 } else {
-                    alert(response.message);
+                    layer.msg(response.message);
                 }
             }
         );
@@ -83,7 +83,7 @@ app.controller('typeTemplateController', function ($scope, $controller,
                     $scope.reloadList();//刷新列表
                     $scope.selectIds = [];
                 } else {
-                    alert(response.message)
+                    layer.msg(response.message)
                 }
             }
         );
@@ -101,7 +101,7 @@ app.controller('typeTemplateController', function ($scope, $controller,
                     });
                     $scope.paginationConf.totalItems = response.data.total;//更新总记录数
                 } else {
-                    alert(response.message)
+                    layer.msg(response.message)
                 }
             }
         );
@@ -128,7 +128,7 @@ app.controller('typeTemplateController', function ($scope, $controller,
                     data: temp
                 }
             } else {
-                alert(response.message);
+                layer.msg(response.message);
             }
         })
     }
@@ -145,7 +145,7 @@ app.controller('typeTemplateController', function ($scope, $controller,
                     data: temp
                 }
             } else {
-                alert(response.message);
+                layer.msg(response.message);
             }
         })
     }

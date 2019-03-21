@@ -2,7 +2,11 @@ app.controller("indexController",function($scope,loginService){
 	
 	$scope.showName = function(){
 		loginService.showName().success(function(response){
-			$scope.username = response.username;
+			if (response.success) {
+                $scope.username = response.username;
+			} else {
+				layer.msg(response.message)
+			}
 		});
 	}
 	

@@ -5,7 +5,7 @@ import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.common.pojo.ResponseResult;
 import com.pinyougou.common.utils.ValidateUtil;
 import com.pinyougou.pojo.TbBrand;
-import com.pinyougou.seller.auth.BrandService;
+import com.pinyougou.seller.service.BrandService;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -112,7 +112,7 @@ public class BrandController {
             return ResponseResult.ok(tbBrand);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseResult.error("删除失败");
+            return ResponseResult.error("查询失败");
         }
     }
 

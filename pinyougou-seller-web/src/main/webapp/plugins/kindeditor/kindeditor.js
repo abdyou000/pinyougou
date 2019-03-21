@@ -365,7 +365,7 @@ _extend(KEvent, {
 		if (!self.metaKey && self.ctrlKey) {
 			self.metaKey = self.ctrlKey;
 		}
-		if (!self.which && self.button !== undefined) {
+		if (!self.which && self.button != undefined) {
 			self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : (self.button & 4 ? 2 : 0)));
 		}
 		switch (self.which) {
@@ -661,7 +661,7 @@ function _formatUrl(url, mode, host, pathname) {
 	}
 	var match;
 	if ((match = /^(\w+:\/\/[^\/]*)/.exec(url))) {
-		if (match[1] !== host) {
+		if (match[1] != host) {
 			return url;
 		}
 	} else if (/^\w+:/.test(url)) {
@@ -675,7 +675,7 @@ function _formatUrl(url, mode, host, pathname) {
 				if (paths.length > 0) {
 					paths.pop();
 				}
-			} else if (part !== '' && part != '.') {
+			} else if (part != '' && part != '.') {
 				paths.push(part);
 			}
 		}
@@ -807,7 +807,7 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar) {
 				startNewline = endNewline = '';
 			}
 		}
-		if (attr !== '') {
+		if (attr != '') {
 			var attrMap = _getAttrList(full);
 			if (tagName === 'font') {
 				var fontStyleMap = {}, fontStyle = '';
@@ -849,12 +849,12 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar) {
 				if (_inArray(key, ['src', 'href']) >= 0) {
 					attrMap[key] = _formatUrl(val, urlType);
 				}
-				if (htmlTags && key !== 'style' && !htmlTagMap[tagName]['*'] && !htmlTagMap[tagName][key] ||
+				if (htmlTags && key != 'style' && !htmlTagMap[tagName]['*'] && !htmlTagMap[tagName][key] ||
 					tagName === 'body' && key === 'contenteditable' ||
 					/^kindeditor_\d+$/.test(key)) {
 					delete attrMap[key];
 				}
-				if (key === 'style' && val !== '') {
+				if (key === 'style' && val != '') {
 					var styleMap = _getCssList(val);
 					_each(styleMap, function(k, v) {
 						if (htmlTags && !htmlTagMap[tagName].style && !htmlTagMap[tagName]['.' + k]) {
@@ -948,7 +948,7 @@ function _mediaImg(blankPath, attrs) {
 		style += 'height:' + height + 'px;';
 	}
 	var html = '<img class="' + _mediaClass(type) + '" src="' + blankPath + '" ';
-	if (style !== '') {
+	if (style != '') {
 		html += 'style="' + style + '" ';
 	}
 	html += 'data-ke-tag="' + escape(srcTag) + '" alt="" />';
@@ -990,7 +990,7 @@ function _contains(nodeA, nodeB) {
 }
 var _getSetAttrDiv = document.createElement('div');
 _getSetAttrDiv.setAttribute('className', 't');
-var _GET_SET_ATTRIBUTE = _getSetAttrDiv.className !== 't';
+var _GET_SET_ATTRIBUTE = _getSetAttrDiv.className != 't';
 function _getAttr(el, key) {
 	key = key.toLowerCase();
 	var val = null;
@@ -1008,7 +1008,7 @@ function _getAttr(el, key) {
 			val = el.getAttribute(key, 1);
 		}
 	}
-	if (key === 'style' && val !== null) {
+	if (key === 'style' && val != null) {
 		val = _formatCss(val);
 	}
 	return val;
@@ -1061,7 +1061,7 @@ function _queryAll(expr, root) {
 				}
 			}
 		} else if (doc.querySelectorAll) {
-			els = doc.querySelectorAll((root.nodeName !== '#document' ? root.nodeName + ' ' : '') + tag + '.' + className);
+			els = doc.querySelectorAll((root.nodeName != '#document' ? root.nodeName + ' ' : '') + tag + '.' + className);
 			for (i = 0, len = els.length; i < len; i++) {
 				el = els[i];
 				if (_contains(root, el)) {
@@ -1089,7 +1089,7 @@ function _queryAll(expr, root) {
 		for (var i = 0, len = els.length; i < len; i++) {
 			el = els[i];
 			if (cmpTag(tag, el.nodeName) && _contains(root, el)) {
-				if (el.getAttribute('name') !== null) {
+				if (el.getAttribute('name') != null) {
 					arr.push(el);
 				}
 			}
@@ -1102,7 +1102,7 @@ function _queryAll(expr, root) {
 			el = els[i];
 			if (el.nodeType == 1) {
 				if (val === null) {
-					if (_getAttr(el, key) !== null) {
+					if (_getAttr(el, key) != null) {
 						arr.push(el);
 					}
 				} else {
@@ -1148,7 +1148,7 @@ function _queryAll(expr, root) {
 	}
 	var parts = [], arr, re = /((?:\\.|[^\s>])+|[\s>])/g;
 	while ((arr = re.exec(expr))) {
-		if (arr[1] !== ' ') {
+		if (arr[1] != ' ') {
 			parts.push(arr[1]);
 		}
 	}
@@ -1673,7 +1673,7 @@ _extend(KNode, {
 		}
 		var list = [], child = this[0].firstChild;
 		while (child) {
-			if (child.nodeType != 3 || _trim(child.nodeValue) !== '') {
+			if (child.nodeType != 3 || _trim(child.nodeValue) != '') {
 				list.push(child);
 			}
 			child = child.nextSibling;
@@ -1761,7 +1761,7 @@ K = function(expr, root) {
 		if (expr.charAt(0) === '@') {
 			expr = expr.substr(1);
 		}
-		if (expr.length !== length || /<.+>/.test(expr)) {
+		if (expr.length != length || /<.+>/.test(expr)) {
 			var doc = root ? root.ownerDocument || root : document,
 				div = doc.createElement('div'), list = [];
 			div.innerHTML = '<img id="__kindeditor_temp_tag__" width="0" height="0" style="display:none;" />' + expr;
@@ -2115,7 +2115,7 @@ _extend(KRange, {
 		while (++i) {
 			parentA = parentsA[lenA - i];
 			parentB = parentsB[lenB - i];
-			if (!parentA || !parentB || parentA !== parentB) {
+			if (!parentA || !parentB || parentA != parentB) {
 				break;
 			}
 		}
@@ -2182,7 +2182,7 @@ _extend(KRange, {
 			arr[_END_TO_END] = 'EndToEnd';
 			arr[_END_TO_START] = 'StartToEnd';
 			var cmp = rangeA.compareEndPoints(arr[how], rangeB);
-			if (cmp !== 0) {
+			if (cmp != 0) {
 				return cmp;
 			}
 			var nodeA, nodeB, nodeC, posA, posB;
@@ -2207,14 +2207,14 @@ _extend(KRange, {
 				return diff > 0 ? 1 : (diff < 0 ? -1 : 0);
 			}
 			nodeC = nodeB;
-			while (nodeC && nodeC.parentNode !== nodeA) {
+			while (nodeC && nodeC.parentNode != nodeA) {
 				nodeC = nodeC.parentNode;
 			}
 			if (nodeC) {
 				return K(nodeC).index() >= posA ? -1 : 1;
 			}
 			nodeC = nodeA;
-			while (nodeC && nodeC.parentNode !== nodeB) {
+			while (nodeC && nodeC.parentNode != nodeB) {
 				nodeC = nodeC.parentNode;
 			}
 			if (nodeC) {
@@ -2513,7 +2513,7 @@ function _nativeCommandValue(doc, key) {
 	try {
 		val = doc.queryCommandValue(key);
 	} catch (e) {}
-	if (typeof val !== 'string') {
+	if (typeof val != 'string') {
 		val = '';
 	}
 	return val;
@@ -2531,7 +2531,7 @@ function _getRng(doc) {
 			rng = sel.createRange();
 		}
 	} catch(e) {}
-	if (_IERANGE && (!rng || (!rng.item && rng.parentElement().ownerDocument !== doc))) {
+	if (_IERANGE && (!rng || (!rng.item && rng.parentElement().ownerDocument != doc))) {
 		return null;
 	}
 	return rng;
@@ -2552,7 +2552,7 @@ function _hasAttrOrCss(knode, map) {
 }
 function _hasAttrOrCssByKey(knode, map, mapKey) {
 	mapKey = mapKey || knode.name;
-	if (knode.type !== 1) {
+	if (knode.type != 1) {
 		return false;
 	}
 	var newMap = _singleKeyMap(map);
@@ -2569,10 +2569,10 @@ function _hasAttrOrCssByKey(knode, map, mapKey) {
 		var method = match[1] ? 'css' : 'attr';
 		key = match[2];
 		var val = match[3] || '';
-		if (val === '' && knode[method](key) !== '') {
+		if (val === '' && knode[method](key) != '') {
 			return true;
 		}
-		if (val !== '' && knode[method](key) === val) {
+		if (val != '' && knode[method](key) === val) {
 			return true;
 		}
 	}
@@ -2587,7 +2587,7 @@ function _removeAttrOrCss(knode, map) {
 }
 function _removeAttrOrCssByKey(knode, map, mapKey) {
 	mapKey = mapKey || knode.name;
-	if (knode.type !== 1) {
+	if (knode.type != 1) {
 		return;
 	}
 	var newMap = _singleKeyMap(map);
@@ -2674,7 +2674,7 @@ function _wrapNode(knode, wrapper) {
 }
 function _mergeAttrs(knode, attrs, styles) {
 	_each(attrs, function(key, val) {
-		if (key !== 'style') {
+		if (key != 'style') {
 			knode.attr(key, val);
 		}
 	});
@@ -2757,7 +2757,7 @@ _extend(KCmd, {
 			rng = range.get(true);
 			sel.removeAllRanges();
 			sel.addRange(rng);
-			if (doc !== document) {
+			if (doc != document) {
 				var pos = K(rng.endContainer).pos();
 				win.scrollTo(pos.x, pos.y);
 			}
@@ -3437,14 +3437,14 @@ _extend(KWidget, {
 	pos : function(x, y, updateProp) {
 		var self = this;
 		updateProp = _undef(updateProp, true);
-		if (x !== null) {
+		if (x != null) {
 			x = x < 0 ? 0 : _addUnit(x);
 			self.div.css('left', x);
 			if (updateProp) {
 				self.x = x;
 			}
 		}
-		if (y !== null) {
+		if (y != null) {
 			y = y < 0 ? 0 : _addUnit(y);
 			self.div.css('top', y);
 			if (updateProp) {
@@ -3623,7 +3623,7 @@ _extend(KEdit, KWidget, {
 			bodyClass = options.bodyClass,
 			cssPath = options.cssPath,
 			cssData = options.cssData,
-			isDocumentDomain = location.protocol != 'res:' && location.host.replace(/:\d+/, '') !== document.domain,
+			isDocumentDomain = location.protocol != 'res:' && location.host.replace(/:\d+/, '') != document.domain,
 			srcScript = ('document.open();' +
 				(isDocumentDomain ? 'document.domain="' + document.domain + '";' : '') +
 				'document.close();'),
@@ -4037,7 +4037,7 @@ _extend(KMenu, KWidget, {
 		if (item.checked) {
 			iconClass = 'ke-icon-checked';
 		}
-		if (iconClass !== '') {
+		if (iconClass != '') {
 			leftDiv.html('<span class="ke-inline-block ke-toolbar-icon ke-toolbar-icon-url ' + iconClass + '"></span>');
 		}
 		rightDiv.html(item.title);
@@ -4605,10 +4605,10 @@ function _bindContextmenuEvent() {
 }
 function _bindNewlineEvent() {
 	var self = this, doc = self.edit.doc, newlineTag = self.newlineTag;
-	if (_IE && newlineTag !== 'br') {
+	if (_IE && newlineTag != 'br') {
 		return;
 	}
-	if (_GECKO && _V < 3 && newlineTag !== 'p') {
+	if (_GECKO && _V < 3 && newlineTag != 'p') {
 		return;
 	}
 	if (_OPERA && _V < 9) {
@@ -4728,7 +4728,7 @@ function _addBookmarkToStack(stack, bookmark) {
 		return;
 	}
 	var prev = stack[stack.length - 1];
-	if (_removeBookmarkTag(bookmark.html) !== _removeBookmarkTag(prev.html)) {
+	if (_removeBookmarkTag(bookmark.html) != _removeBookmarkTag(prev.html)) {
 		stack.push(bookmark);
 	}
 }
@@ -5187,7 +5187,7 @@ KEditor.prototype = {
 		return _trim(this.text().replace(/\r\n|\n|\r/, '')) === '';
 	},
 	isDirty : function() {
-		return _trim(this.initContent.replace(/\r\n|\n|\r|t/g, '')) !== _trim(this.html().replace(/\r\n|\n|\r|t/g, ''));
+		return _trim(this.initContent.replace(/\r\n|\n|\r|t/g, '')) != _trim(this.html().replace(/\r\n|\n|\r|t/g, ''));
 	},
 	selectedHtml : function() {
 		var val = this.isCreated ? this.cmd.range.html() : '';
@@ -5313,7 +5313,7 @@ KEditor.prototype = {
 		options.y = pos.y + knode.height();
 		options.z = self.options.zIndex;
 		options.shadowMode = _undef(options.shadowMode, self.shadowMode);
-		if (options.selectedColor !== undefined) {
+		if (options.selectedColor != undefined) {
 			options.cls = 'ke-colorpicker-' + self.themeType;
 			options.noColor = self.lang('noColor');
 			self.menu = _colorpicker(options);
@@ -5928,7 +5928,7 @@ _plugin('core', function(K) {
 		})
 		.replace(/<a[^>]*name="([^"]+)"[^>]*>(?:<\/a>)?/ig, function(full) {
 			var attrs = _getAttrList(full);
-			if (attrs.href !== undefined) {
+			if (attrs.href != undefined) {
 				return full;
 			}
 			return '<img class="ke-anchor" src="' + self.themesPath + 'common/anchor.gif" data-ke-name="' + escape(attrs.name) + '" />';

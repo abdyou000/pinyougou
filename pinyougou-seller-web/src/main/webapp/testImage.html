@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试Image对象和图片预加载</title>
+    <style>
+        .angle-div {
+            width: 100px;
+            height: 100px;
+            background-color: #06c;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="angle-div" style="background: red;height: 100px;width: 100px"></div>
+<script>
+    let timer = null;
+    let Deg = 0;
+    let distance = 360;
+    var _requestAnimationFrame_ = window.requestAnimationFrame || window.webkitRequestAnimationFrame;//本文由@IT·平头哥联盟-首席填坑官∙苏南分享
+    let angleDiv = document.querySelector(".angle-div");
+    cancelAnimationFrame(timer);
+    let fn = () => {
+        if (Deg < distance) {
+            Deg++;
+        } else {
+            Deg = 0;
+        }
+        ;
+        angleDiv.style.transform = `rotateZ(${Deg}deg) translateZ(0)`;
+        angleDiv.style.WebkitTransform = `rotateZ(${Deg}deg) translateZ(0)`;
+        timer = _requestAnimationFrame_(fn);
+    }
+    timer = _requestAnimationFrame_(fn);
+</script>
+
+
+</body>
+</html>

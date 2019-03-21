@@ -14,6 +14,7 @@ public interface TbItemDao {
     int deleteByPrimaryKey(Long id);
 
     int insert(TbItem record);
+    int insertList(List<TbItem> records);
 
     int insertSelective(TbItem record);
 

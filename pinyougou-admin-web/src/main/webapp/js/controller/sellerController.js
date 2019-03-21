@@ -29,7 +29,7 @@ app.controller('sellerController', function ($scope, $controller, sellerService)
                 if (response.success) {
                     $scope.entity = response.data;
                 } else {
-                    alert(response.message)
+                    layer.msg(response.message)
                 }
             }
         );
@@ -49,7 +49,7 @@ app.controller('sellerController', function ($scope, $controller, sellerService)
                     //重新查询
                     $scope.reloadList();//重新加载
                 } else {
-                    alert(response.message);
+                    layer.msg(response.message);
                 }
             }
         );
@@ -79,7 +79,7 @@ app.controller('sellerController', function ($scope, $controller, sellerService)
                     $scope.list = response.data.rows;
                     $scope.paginationConf.totalItems = response.data.total;//更新总记录数
                 } else {
-                    alert(response.message)
+                    layer.msg(response.message)
                 }
 
             }
@@ -93,7 +93,7 @@ app.controller('sellerController', function ($scope, $controller, sellerService)
             if (response.success) {
                 $scope.reloadList();//刷新列表
             } else {
-                alert(response.message)
+                layer.msg(response.message)
             }
         })
     };

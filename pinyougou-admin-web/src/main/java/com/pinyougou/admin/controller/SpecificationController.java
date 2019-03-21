@@ -6,7 +6,7 @@ import com.pinyougou.common.pojo.ResponseResult;
 import com.pinyougou.common.pojo.SpecificationEntity;
 import com.pinyougou.common.utils.ValidateUtil;
 import com.pinyougou.pojo.TbSpecification;
-import com.pinyougou.seller.auth.SpecificationService;
+import com.pinyougou.seller.service.SpecificationService;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -114,7 +114,7 @@ public class SpecificationController {
             return ResponseResult.ok(entity);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseResult.error("删除失败");
+            return ResponseResult.error("查询失败");
         }
     }
 

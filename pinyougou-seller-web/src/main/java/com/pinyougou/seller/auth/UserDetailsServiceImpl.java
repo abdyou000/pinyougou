@@ -5,21 +5,25 @@ import com.google.common.collect.Lists;
 import com.pinyougou.common.enums.SellerStatusEnum;
 import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.pojo.TbSeller;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.pinyougou.seller.service.SellerService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.Objects;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Reference
     private SellerService sellerService;
+
+    public void setSellerService(SellerService sellerService) {
+        this.sellerService = sellerService;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

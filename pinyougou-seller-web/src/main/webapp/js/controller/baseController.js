@@ -1,4 +1,4 @@
-app.controller("baseController",function($scope){
+app.controller("baseController",function($scope,layer){
 	// 分页的配置的信息
 	$scope.paginationConf = {
 		 currentPage: 1, // 当前页数
@@ -49,6 +49,7 @@ app.controller("baseController",function($scope){
 	}
 	
 	// 从集合中查询某个名称的值是否存在
+
 	$scope.searchObjectByKey = function(list,keyName,keyValue){
 		for(var i=0;i<list.length;i++){
 			if(list[i][keyName] == keyValue){

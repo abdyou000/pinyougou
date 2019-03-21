@@ -148,6 +148,27 @@
       #{category,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, #{spec,jdbcType=VARCHAR}, 
       #{seller,jdbcType=VARCHAR})
   </insert>
+    <insert id="insertList" parameterType="java.util.List">
+        insert into tb_item (title, sell_point, price,
+        stock_count, num, barcode,
+        image, categoryId, `status`,
+        create_time, update_time, item_sn,
+        cost_pirce, market_price, is_default,
+        goods_id, seller_id, cart_thumbnail,
+        category, brand, spec,
+        seller)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.title,jdbcType=VARCHAR}, #{item.sellPoint,jdbcType=VARCHAR}, #{item.price,jdbcType=DECIMAL},
+            #{item.stockCount,jdbcType=INTEGER}, #{item.num,jdbcType=INTEGER}, #{item.barcode,jdbcType=VARCHAR},
+            #{item.image,jdbcType=VARCHAR}, #{item.categoryid,jdbcType=BIGINT}, #{item.status,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.itemSn,jdbcType=VARCHAR},
+            #{item.costPirce,jdbcType=DECIMAL}, #{item.marketPrice,jdbcType=DECIMAL}, #{item.isDefault,jdbcType=VARCHAR},
+            #{item.goodsId,jdbcType=BIGINT}, #{item.sellerId,jdbcType=VARCHAR}, #{item.cartThumbnail,jdbcType=VARCHAR},
+            #{item.category,jdbcType=VARCHAR}, #{item.brand,jdbcType=VARCHAR}, #{item.spec,jdbcType=VARCHAR},
+            #{item.seller,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pinyougou.pojo.TbItem"
             useGeneratedKeys="true">
         insert into tb_item

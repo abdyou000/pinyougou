@@ -3,10 +3,13 @@
 		xmlns="http://www.springframework.org/schema/security"
 		xmlns:beans="http://www.springframework.org/schema/beans"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
 		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
 						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<http pattern="/shoplogin.html" security="none"/>
+	<http pattern="/register.html" security="none"/>
 	<http pattern="/css/**" security="none"/>
 	<http pattern="/img/**" security="none"/>
 	<http pattern="/js/**" security="none"/>
@@ -28,8 +31,18 @@
 	<!-- 配置认证管理器 -->
 	<authentication-manager>
 		<!-- 认证的提供者 -->
-		<authentication-provider user-service-ref="userDetailsService" />
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder ref="passwordEncoder" />
+		</authentication-provider>
 	</authentication-manager>
 
-	<beans:bean id="userDetailsService" class="com.pinyougou.seller.auth.UserDetailsServiceImpl" />
+    <beans:bean id="userDetailsService" class="com.pinyougou.seller.auth.UserDetailsServiceImpl">
+        <beans:property name="sellerService" ref="sellerService" />
+    </beans:bean>
+
+    <dubbo:application name="pinyougou-seller-web"/>
+    <dubbo:registry address="zookeeper://119.23.237.165:2181"/>
+    <dubbo:reference id="sellerService" interface="com.pinyougou.seller.service.SellerService"/>
+
+	<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 </beans:beans>

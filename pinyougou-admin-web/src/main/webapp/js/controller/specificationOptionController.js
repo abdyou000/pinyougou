@@ -45,7 +45,7 @@ app.controller('specificationOptionController', function ($scope, $controller, s
                     //重新查询
                     $scope.reloadList();//重新加载
                 } else {
-                    alert(response.message);
+                    layer.msg(response.message);
                 }
             }
         );

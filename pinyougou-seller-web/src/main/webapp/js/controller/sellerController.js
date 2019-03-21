@@ -45,7 +45,7 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 					//重新查询 
 		        	$scope.reloadList();//重新加载
 				}else{
-					alert(response.message);
+					layer.msg(response.message);
 				}
 			}		
 		);				
@@ -59,7 +59,7 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 		        	// $scope.reloadList();//重新加载
 					location.href="shoplogin.html";
 				}else{
-					alert(response.message);
+					layer.msg(response.message);
 				}
 			}		
 		);	
@@ -90,5 +90,14 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 			}			
 		);
 	}
-    
+
+    $scope.showName = function(){
+        sellerService.showName().success(function(response){
+            if (response.success) {
+                $scope.username = response.data.username;
+            } else {
+                layer.msg(response.message)
+            }
+        });
+    }
 });	
