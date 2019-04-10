@@ -65,4 +65,5 @@ public interface ItemService {
      */
     public PageResult findPage(TbItem item, int pageNum, int pageSize);
 
+    List<TbItem> findByGoodsIds(Long[] goodsIds,String status);
 }

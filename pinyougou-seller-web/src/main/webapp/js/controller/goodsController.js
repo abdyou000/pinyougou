@@ -92,8 +92,7 @@ app.controller('goodsController', function ($scope, $controller, $location, type
                 if (response.success) {
                     //重新查询
                     layer.msg(response.message);
-                    $scope.entity = {};
-                    editor.html('');
+                    location.href="goods.html";
                 } else {
                     layer.msg(response.message);
                 }
@@ -172,7 +171,6 @@ app.controller('goodsController', function ($scope, $controller, $location, type
 
     // 查询二级分类列表:
     $scope.$watch("entity.goods.category1Id", function (newValue, oldValue) {
-        $scope.entity.goods.category2Id = null;
         if (!newValue) {
             $scope.itemCat2List = [];
             return;
@@ -242,7 +240,7 @@ app.controller('goodsController', function ($scope, $controller, $location, type
         typeTemplateService.findSpecList(newValue).success(function (response) {
             if (response.success) {
                 $scope.specList = response.data;
-                $scope.entity.goodsDesc.specificationItems = [];
+                // $scope.entity.goodsDesc.specificationItems = [];
             } else {
                 layer.msg(response.message)
             }

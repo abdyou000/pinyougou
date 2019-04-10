@@ -7,7 +7,12 @@ app.controller('contentCategoryController', function ($scope, $controller, conte
     $scope.findAll = function () {
         contentCategoryService.findAll().success(
             function (response) {
-                $scope.list = response;
+                if (response.success) {
+                    $scope.list = response.data;
+                } else {
+                    layer.msg(response.message);
+                }
+
             }
         );
     }
@@ -16,8 +21,15 @@ app.controller('contentCategoryController', function ($scope, $controller, conte
     $scope.findPage = function (page, rows) {
         contentCategoryService.findPage(page, rows).success(
             function (response) {
-                $scope.list = response.rows;
-                $scope.paginationConf.totalItems = response.total;//更新总记录数
+                if (response.success) {
+                    $scope.list = response.data.rows;
+                    $scope.paginationConf.totalItems = response.data.total;//更新总记录数
+                } else {
+                    layer.msg(response.message);
+                }
+
+
+
             }
         );
     }
@@ -26,7 +38,14 @@ app.controller('contentCategoryController', function ($scope, $controller, conte
     $scope.findOne = function (id) {
         contentCategoryService.findOne(id).success(
             function (response) {
-                $scope.entity = response;
+
+                if (response.success) {
+                    $scope.entity = response.data;
+                } else {
+                    layer.msg(response.message);
+                }
+
+
             }
         );
     }
@@ -60,6 +79,8 @@ app.controller('contentCategoryController', function ($scope, $controller, conte
                 if (response.success) {
                     $scope.reloadList();//刷新列表
                     $scope.selectIds = [];
+                }else {
+                    layer.msg(response.message);
                 }
             }
         );
@@ -71,8 +92,13 @@ app.controller('contentCategoryController', function ($scope, $controller, conte
     $scope.search = function (page, rows) {
         contentCategoryService.search(page, rows, $scope.searchEntity).success(
             function (response) {
-                $scope.list = response.rows;
-                $scope.paginationConf.totalItems = response.total;//更新总记录数
+                if (response.success) {
+                    $scope.list = response.data.rows;
+                    $scope.paginationConf.totalItems = response.data.total;//更新总记录数
+                }else {
+                    layer.msg(response.message);
+                }
+
             }
         );
     }

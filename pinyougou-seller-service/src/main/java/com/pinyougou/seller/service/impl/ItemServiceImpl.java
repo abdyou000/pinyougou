@@ -11,6 +11,7 @@ import com.pinyougou.pojo.TbItemExample.Criteria;
 import com.pinyougou.seller.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -133,6 +134,16 @@ public class ItemServiceImpl implements ItemService {
 
         Page<TbItem> page = (Page<TbItem>) itemMapper.selectByExample(example);
         return new PageResult(page.getTotal(), page.getResult());
+    }
+
+    @Override
+    public List<TbItem> findByGoodsIds(Long[] goodsIds,String status) {
+
+        TbItemExample example = new TbItemExample();
+        Criteria criteria = example.createCriteria();
+        criteria.andGoodsIdIn(Arrays.asList(goodsIds));
+        criteria.andStatusEqualTo(status);
+        return itemMapper.selectByExample(example);
     }
 
 }

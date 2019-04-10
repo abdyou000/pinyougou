@@ -14,6 +14,7 @@ public interface TbOrderDao {
     int deleteByPrimaryKey(Long orderId);
 
     int insert(TbOrder record);
+    int insertList(List<TbOrder> orderList);
 
     int insertSelective(TbOrder record);
 

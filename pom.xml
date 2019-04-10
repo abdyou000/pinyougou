@@ -16,6 +16,26 @@
         <module>pinyougou-seller-web</module>
         <module>pinyougou-admin-web</module>
         <module>pinyougou-task-service</module>
+        <module>pinyougou-content-interface</module>
+        <module>pinyougou-content-service</module>
+        <module>pinyougou-portal-web</module>
+        <module>pinyougou-solr-util</module>
+        <module>pinyougou-search-interface</module>
+        <module>pinyougou-search-service</module>
+        <module>pinyougou-search-web</module>
+        <module>pinyougou-page-interface</module>
+        <module>pinyougou-page-service</module>
+        <module>pinyougou-page-web</module>
+        <module>pinyougou-user-interface</module>
+        <module>pinyougou-user-service</module>
+        <module>pinyougou-user-web</module>
+        <module>pinyougou-cart-interface</module>
+        <module>pinyougou-cart-service</module>
+        <module>pinyougou-cart-web</module>
+        <module>pinyougou-order-interface</module>
+        <module>pinyougou-order-service</module>
+        <module>pinyougou-pay-interface</module>
+        <module>pinyougou-pay-service</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -184,13 +204,18 @@
                 <version>1.7.2.RELEASE</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-solr</artifactId>
+                <version>1.5.5.RELEASE</version>
+            </dependency>
+            <dependency>
                 <groupId>org.freemarker</groupId>
                 <artifactId>freemarker</artifactId>
                 <version>${freemarker.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.activemq</groupId>
-                <artifactId>activemq-all</artifactId>
+                <artifactId>activemq-client</artifactId>
                 <version>${activemq.version}</version>
             </dependency>
             <!-- 身份验证 -->
@@ -313,6 +338,11 @@
                 <version>1.1.7</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.github.wxpay</groupId>
+                <artifactId>wxpay-sdk</artifactId>
+                <version>3.0.9</version>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>

@@ -1,5 +1,6 @@
 package com.pinyougou.seller.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
@@ -9,13 +10,20 @@ import com.pinyougou.common.enums.GoodsStatusEnum;
 import com.pinyougou.common.pojo.GoodsEntity;
 import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.mapper.*;
+import com.pinyougou.page.service.ItemPageService;
 import com.pinyougou.pojo.*;
 import com.pinyougou.pojo.TbGoodsExample.Criteria;
+import com.pinyougou.search.service.ItemSearchService;
 import com.pinyougou.seller.service.GoodsService;
+import com.pinyougou.seller.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
 
+import javax.jms.Destination;
+import javax.jms.Queue;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 服务实现层
@@ -173,6 +181,10 @@ public class GoodsServiceImpl implements GoodsService {
         if (ids != null && ids.length > 0) {
             criteria.andIdIn(Arrays.asList(ids));
             goodsMapper.deleteByExample(example);
+            //删除索引库
+            jmsTemplate.send(queueSolrDeleteDestination, session -> session.createObjectMessage(ids));
+            //删除模板文件
+            jmsTemplate.send(topicPageDeleteDestination,session -> session.createObjectMessage(ids));
         }
     }
 
@@ -216,6 +228,25 @@ public class GoodsServiceImpl implements GoodsService {
         return new PageResult(page.getTotal(), page.getResult());
     }
 
+
+    @Autowired
+    private ItemService itemService;
+
+    @Autowired
+    private JmsTemplate jmsTemplate;
+
+    @Autowired
+    private Destination queueSolrDestination;
+
+    @Autowired
+    private Destination queueSolrDeleteDestination;
+
+    @Autowired
+    private Destination topicPageDestination;
+
+    @Autowired
+    private Destination topicPageDeleteDestination;
+
     @Override
     public void updateStatus(Long[] ids, String status) {
         TbGoods goods = new TbGoods();
@@ -223,7 +254,17 @@ public class GoodsServiceImpl implements GoodsService {
         TbGoodsExample example = new TbGoodsExample();
         Criteria criteria = example.createCriteria();
         criteria.andIdIn(Arrays.asList(ids));
-        goodsMapper.updateByExampleSelective(goods,example);
+        goodsMapper.updateByExampleSelective(goods, example);
+
+        //更新索引库 删除静态页面
+        if (Objects.equals("1", status)) {
+            List<TbItem> itemList = itemService.findByGoodsIds(ids, status);
+            String jsonString = JSON.toJSONString(itemList);
+            jmsTemplate.send(queueSolrDestination, session -> session.createTextMessage(jsonString));
+//            itemSearchService.importGoodsItemList(itemList);
+//            Stream.of(ids).forEach(goodsId -> itemPageService.generateItemHtml(goodsId));
+            jmsTemplate.send(topicPageDestination, session -> session.createObjectMessage(ids));
+        }
     }
 
 }

@@ -13,6 +13,20 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.pinyougou</groupId>
+            <artifactId>pinyougou-page-interface</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.pinyougou</groupId>
+            <artifactId>pinyougou-search-interface</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>com.pinyougou</groupId>
             <artifactId>pinyougou-seller-interface</artifactId>
             <version>1.0-SNAPSHOT</version>
@@ -83,31 +97,8 @@
             <artifactId>servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
 
     </dependencies>
-
-    <properties>
-        <port>8081</port>
-    </properties>
-
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <port>9001</port>
-            </properties>
-        </profile>
-        <profile>
-            <id>pro</id>
-            <properties>
-                <port>9001</port>
-            </properties>
-        </profile>
-    </profiles>
 
     <build>
         <plugins>
@@ -117,7 +108,7 @@
                 <version>2.2</version>
                 <configuration>
                     <!-- 指定端口 -->
-                    <port>${port}</port>
+                    <port>9001</port>
                     <!-- 请求路径 -->
                     <path>/</path>
                 </configuration>

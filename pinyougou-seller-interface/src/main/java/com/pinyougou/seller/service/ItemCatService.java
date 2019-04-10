@@ -67,4 +67,5 @@ public interface ItemCatService {
 
     public List<TbItemCat> findByParentId(Long parentId);
 
+    TbItemCat findByName(String categoryName);
 }

@@ -16,6 +16,7 @@ import com.pinyougou.pojo.TbTypeTemplateExample;
 import com.pinyougou.pojo.TbTypeTemplateExample.Criteria;
 import com.pinyougou.seller.service.TypeTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.HashMap;
 import java.util.List;
@@ -92,6 +93,8 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
         }
     }
 
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public PageResult findPage(TbTypeTemplate typeTemplate, int pageNum, int pageSize) {
@@ -117,6 +120,15 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
         }
 
         Page<TbTypeTemplate> page = (Page<TbTypeTemplate>) typeTemplateMapper.selectByExample(example);
+
+        //添加缓存
+        findAll().forEach(template->{
+            List<Map> brandList = JSON.parseArray(template.getBrandIds(), Map.class);
+            redisTemplate.boundHashOps("brandList").put(template.getId(),brandList);
+            List<Map<String, Object>> specList = findSpecList(template.getId());
+            redisTemplate.boundHashOps("specList").put(template.getId(),specList);
+        });
+
         return new PageResult(page.getTotal(), page.getResult());
     }
 

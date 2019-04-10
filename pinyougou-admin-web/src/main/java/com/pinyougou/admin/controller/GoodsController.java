@@ -6,9 +6,12 @@ import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.common.pojo.ResponseResult;
 import com.pinyougou.common.utils.ValidateUtil;
 import com.pinyougou.pojo.TbGoods;
+import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojo.TbItemCat;
+import com.pinyougou.search.service.ItemSearchService;
 import com.pinyougou.seller.service.GoodsService;
 import com.pinyougou.seller.service.ItemCatService;
+import com.pinyougou.seller.service.ItemService;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * controller
@@ -45,7 +49,6 @@ public class GoodsController {
             return ResponseResult.error("查询失败");
         }
     }
-
     /**
      * 批量删除
      *
@@ -56,6 +59,7 @@ public class GoodsController {
     public ResponseResult<String> delete(Long[] ids) {
         try {
             goodsService.delete(ids);
+
             return ResponseResult.ok("删除成功");
         } catch (IllegalArgumentException e) {
             return ResponseResult.error(e.getMessage());
@@ -84,9 +88,11 @@ public class GoodsController {
         }
     }
 
+    @RequestMapping("/updateStatus")
     public ResponseResult<String> updateStatus(Long[] ids,String status) {
         try {
             goodsService.updateStatus(ids,status);
+
             return ResponseResult.ok("审核成功");
         } catch (Exception e) {
             e.printStackTrace();

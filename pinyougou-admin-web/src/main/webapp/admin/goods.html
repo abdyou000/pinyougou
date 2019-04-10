@@ -21,15 +21,18 @@
     <!-- 引入分页相关的JS和CSS -->
     <script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
     <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
-    
+    <script src="../plugins/gt/ng-layer.js"></script>
     <script type="text/javascript" src="../js/base_pagination.js"></script>
     <script type="text/javascript" src="../js/controller/baseController.js"></script>
     <script type="text/javascript" src="../js/controller/goodsController.js"></script>
     <script type="text/javascript" src="../js/service/goodsService.js"></script>
     <script type="text/javascript" src="../js/service/itemCatService.js"></script>
+    <script type="text/javascript" src="../js/service/brandService.js"></script>
 </head>
 
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="goodsController" ng-init="searchEntity={auditStatus:'0'};findItemCatList()">
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou"
+      ng-controller="goodsController"
+      ng-init="searchEntity={auditStatus:'0'};findItemCatList()">
   <!-- .box-body -->
                 
                     <div class="box-header with-border">
@@ -93,7 +96,7 @@
 		                                  	
 		                                  </td>		                                  
 		                                  <td class="text-center">                                          
-		                                 	  <button type="button" class="btn bg-olive btn-xs" >详情</button>                  
+		                                 	  <a class="btn bg-olive btn-xs" href="goods_detail.html#?id={{entity.id}}">详情</a>
 		                                  </td>
 			                          </tr>
 			                      </tbody>

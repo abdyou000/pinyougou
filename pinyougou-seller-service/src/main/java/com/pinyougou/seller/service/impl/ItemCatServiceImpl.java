@@ -10,6 +10,7 @@ import com.pinyougou.pojo.TbItemCatExample;
 import com.pinyougou.pojo.TbItemCatExample.Criteria;
 import com.pinyougou.seller.service.ItemCatService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Arrays;
 import java.util.List;
@@ -108,6 +109,9 @@ public class ItemCatServiceImpl implements ItemCatService {
         return new PageResult(page.getTotal(), page.getResult());
     }
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Override
     public List<TbItemCat> findByParentId(Long parentId) {
 
@@ -115,7 +119,22 @@ public class ItemCatServiceImpl implements ItemCatService {
         Criteria criteria = example.createCriteria();
         criteria.andParentIdEqualTo(parentId);
         List<TbItemCat> itemCatList = itemCatMapper.selectByExample(example);
+
+        //添加缓存 分类名key：模板IDvalue
+        findAll().forEach(itemCat->{
+            redisTemplate.boundHashOps("itemCat").put(itemCat.getName(),itemCat.getTypeId());
+        });
+
         return itemCatList;
+    }
+
+    @Override
+    public TbItemCat findByName(String categoryName) {
+        TbItemCatExample example = new TbItemCatExample();
+        Criteria criteria = example.createCriteria();
+        criteria.andNameEqualTo(categoryName);
+        List<TbItemCat> itemCatList = itemCatMapper.selectByExample(example);
+        return itemCatList.size() > 0 ? itemCatList.get(0) : null;
     }
 
 }
