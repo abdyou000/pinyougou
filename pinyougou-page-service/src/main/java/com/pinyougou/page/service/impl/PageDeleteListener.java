@@ -31,8 +31,6 @@ public class PageDeleteListener implements MessageListener {
         } catch (JMSException e) {
             e.printStackTrace();
         }
-
-
     }
 
 }

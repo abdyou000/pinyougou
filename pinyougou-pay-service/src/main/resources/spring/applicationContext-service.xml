@@ -18,7 +18,7 @@
 
     <bean id="myWXPayConfig" class="com.pinyougou.common.utils.MyWXPayConfig"/>
     <bean class="com.github.wxpay.sdk.WXPay">
-        <constructor-arg index="0" ref="myWXPayConfig"/>
-        <constructor-arg index="1" value="false"/>
+        <constructor-arg index="0" type="com.github.wxpay.sdk.WXPayConfig" ref="myWXPayConfig"/>
+        <constructor-arg index="1" type="java.lang.String" value="${notifyurl}"/>
     </bean>
 </beans>

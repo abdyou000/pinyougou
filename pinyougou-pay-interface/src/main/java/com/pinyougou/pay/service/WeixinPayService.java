@@ -10,14 +10,14 @@ public interface WeixinPayService {
 	 * @param totalFee
 	 * @return
 	 */
-	public Map createNative(String outTradeNo, String totalFee);
+	Map<String,String> createNative(String outTradeNo, String totalFee);
 	
 	/**
 	 * 查询支付订单状态
 	 * @param outTradeNo
 	 * @return
 	 */
-	public Map queryPayStatus(String outTradeNo);
+	Boolean queryPayStatus(String outTradeNo);
 	
 	
 	/**
@@ -25,6 +25,6 @@ public interface WeixinPayService {
 	 * @param outTradeNo
 	 * @return
 	 */
-	public Map closePay(String outTradeNo);
+	Map<String,String> closePay(String outTradeNo);
 	
 }
