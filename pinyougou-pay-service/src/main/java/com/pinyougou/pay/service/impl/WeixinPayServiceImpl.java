@@ -68,4 +68,14 @@ public class WeixinPayServiceImpl implements WeixinPayService {
         return null;
     }
 
+    @Override
+    public boolean isPayResultNotifySignatureValid(Map<String, String> reqMap) {
+        try {
+            return wxPay.isPayResultNotifySignatureValid(reqMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

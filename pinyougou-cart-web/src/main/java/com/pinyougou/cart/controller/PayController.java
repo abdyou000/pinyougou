@@ -31,8 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/pay")
 public class PayController {
 
-    @Autowired
-    private WXPay wxPay;
     @Reference
     private WeixinPayService weixinPayService;
 
@@ -63,9 +61,9 @@ public class PayController {
         try {
             //调用查询
             boolean success = weixinPayService.queryPayStatus(outTradeNo);
-            return success?ResponseResult.ok("支付成功"):ResponseResult.error("支付失败");
+            return success ? ResponseResult.ok("支付成功") : ResponseResult.error("支付失败");
         } catch (Exception e) {
-           e.printStackTrace();
+            e.printStackTrace();
             return ResponseResult.error("支付失败");
         }
 
@@ -79,7 +77,7 @@ public class PayController {
             byte[] bytes = ByteStreams.toByteArray(request.getInputStream());
             String content = new String(bytes);
             Map<String, String> respMap = WXPayUtil.xmlToMap(content);
-            if (wxPay.isPayResultNotifySignatureValid(respMap)) {
+            if (weixinPayService.isPayResultNotifySignatureValid(respMap)) {
                 if (Objects.equals("SUCCESS", respMap.get("return_code"))) {
                     //更新订单状态
                     String outTradeNo = respMap.get("out_trade_no");
@@ -87,12 +85,12 @@ public class PayController {
                     if (Objects.equals("1", payLog.getTradeState())) {
                         //表示已支付，通知已经处理过
                         String respXml = WXPayUtil.mapToXml(ImmutableMap.of(
-                                "return_code","SUCCESS",
-                                "return_msg","OK"
+                                "return_code", "SUCCESS",
+                                "return_msg", "OK"
                         ));
                         response.getWriter().println(respXml);
                     } else {
-                        orderService.updateOrderStatus(outTradeNo,respMap.get("transaction_id"));
+                        orderService.updateOrderStatus(outTradeNo, respMap.get("transaction_id"));
                     }
                 }
             }

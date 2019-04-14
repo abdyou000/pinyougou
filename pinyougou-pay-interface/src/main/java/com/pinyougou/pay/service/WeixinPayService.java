@@ -26,5 +26,6 @@ public interface WeixinPayService {
 	 * @return
 	 */
 	Map<String,String> closePay(String outTradeNo);
-	
+
+	boolean isPayResultNotifySignatureValid(Map<String,String> reqMap);
 }
